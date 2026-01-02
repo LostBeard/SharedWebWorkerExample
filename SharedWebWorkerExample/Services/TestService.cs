@@ -9,6 +9,7 @@
     {
         public async Task<string> Method1(string msg)
         {
+            Console.WriteLine($"Method1 called with message: {msg}");
             msg += $"\nHello from shared worker {DateTime.Now}";
             return msg;
         }
