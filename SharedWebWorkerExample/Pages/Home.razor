@@ -1,0 +1,27 @@
+﻿@page "/"
+@using SharedWebWorkerExample.Services
+@using SpawnDev.BlazorJS.WebWorkers
+
+<PageTitle>SharedWebWorkerExample</PageTitle>
+
+<h1>SharedWebWorkerExample</h1>
+
+<button class="btn btn-primary" @onclick="Run">Click me</button>
+
+<pre role="status">@status</pre>
+
+
+@code {
+    [Inject]
+    WebWorkerService WebWorkerService { get; set; } = default!;
+
+    private string status = "";
+
+    private async Task Run()
+    {
+        var sharedWorker = await WebWorkerService.GetSharedWebWorker();
+        var testService = sharedWorker!.GetService<ITestService>();
+        status = await testService.Method1("Hello from main thread");
+        StateHasChanged();
+    }
+}
